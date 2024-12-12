@@ -1,0 +1,34 @@
+{
+  "name": "sinon-supertest-example",
+  "version": "1.0.0",
+  "main": "src/app.ts",
+  "scripts": {
+    "dev": "nodemon --exec tsx src/app.ts",
+    "test": "mocha --require tsx test/**/*.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mocha": "^11.0.1",
+    "mongodb-memory-server": "^10.1.2",
+    "mongoose": "^8.8.4",
+    "nodemon": "^3.1.7"
+  },
+  "devDependencies": {
+    "@types/chai": "^5.0.1",
+    "@types/express": "^5.0.0",
+    "@types/mocha": "^10.0.10",
+    "@types/sinon": "^17.0.3",
+    "@types/supertest": "^6.0.2",
+    "@types/typescript": "^0.4.29",
+    "chai": "^5.1.2",
+    "sinon": "^19.0.2",
+    "supertest": "^7.0.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}
