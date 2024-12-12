@@ -1,14 +1,23 @@
 import supertest from "supertest";
-import app from "../src/app";
+import sinon from "sinon";
+import mongoose from "mongoose";
+import { app, initializeServer } from "../src/app";
 import { expect } from "chai";
 import { User, IUser } from "../src/model";
-import sinon from "sinon";
 
 describe("Create, read, update, delete, endpoint testing", () => {
   let findStub: sinon.SinonStub;
   let saveStub: sinon.SinonStub;
   let updateStub: sinon.SinonStub;
   let deleteStub: sinon.SinonStub;
+
+  before(async () => {
+    await initializeServer();
+  });
+
+  after(async () => {
+    await mongoose.disconnect();
+  });
 
   beforeEach(() => {
     findStub = sinon.stub(User, "find").resolves([

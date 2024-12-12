@@ -13,8 +13,8 @@ app.use(express.json());
 app.use(routes);
 
 // wrapping initializing in a function to be able to use async/await
-async function initializeServer() {
-  if (process.env.NODE_ENV !== "test") {
+export async function initializeServer() {
+  if (process.env.NODE_ENV === "prod") {
     try {
       await mongoose.connect(process.env.MONGODB_URI as string);
       console.log("Connected to MongoDB");
@@ -33,9 +33,11 @@ async function initializeServer() {
   }
 }
 
-initializeServer().catch((err) => {
-  console.error("Failed to initialize server:", err);
-});
+if (process.env.NODE_ENV !== "test") {
+  initializeServer().catch((err) => {
+    console.error("Failed to initialize server:", err);
+  });
+}
 
 // export for testing
 export default app;
