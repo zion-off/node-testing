@@ -2,7 +2,7 @@ import express from "express";
 import mongoose, { Error } from "mongoose";
 import "dotenv/config";
 import routes from "./routes";
-import { MongoMemoryServer } from "mongodb-memory-server";
+
 
 // setup app
 const PORT = process.env.PORT || 3000;
@@ -25,15 +25,10 @@ export async function initializeServer() {
     } catch (err) {
       console.error("Error connecting to MongoDB:", (err as Error).message);
     }
-  } else {
-    const mongoServer = await MongoMemoryServer.create();
-    const mongoUri = mongoServer.getUri();
-    await mongoose.connect(mongoUri);
-    console.log("Connected to in-memory MongoDB for testing");
   }
 }
 
-if (process.env.NODE_ENV !== "test") {
+if (process.env.NODE_ENV === "prod") {
   initializeServer().catch((err) => {
     console.error("Failed to initialize server:", err);
   });

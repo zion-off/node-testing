@@ -4,19 +4,25 @@ import mongoose from "mongoose";
 import { app, initializeServer } from "../src/app";
 import { expect } from "chai";
 import { User, IUser } from "../src/model";
+import { MongoMemoryServer } from "mongodb-memory-server";
 
 describe("Create, read, update, delete, endpoint testing", () => {
   let findStub: sinon.SinonStub;
   let saveStub: sinon.SinonStub;
   let updateStub: sinon.SinonStub;
   let deleteStub: sinon.SinonStub;
+  let mongoServer: MongoMemoryServer;
 
   before(async () => {
-    await initializeServer();
+    mongoServer = await MongoMemoryServer.create();
+    const mongoUri = mongoServer.getUri();
+    await mongoose.connect(mongoUri);
+    console.log("Connected to in-memory MongoDB for testing");
   });
 
   after(async () => {
     await mongoose.disconnect();
+    await mongoServer.stop();
   });
 
   beforeEach(() => {
